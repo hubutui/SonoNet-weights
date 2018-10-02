@@ -39,3 +39,17 @@ Demo videos are available on Youtube:
 
 [![Youtube video 1](http://img.youtube.com/vi/yPCvAdOYncQ/0.jpg)](http://www.youtube.com/watch?v=yPCvAdOYncQ)
 [![Youtube video 2](http://img.youtube.com/vi/4V8V0jF0zFc/0.jpg)](http://www.youtube.com/watch?v=4V8V0jF0zFc)
+
+
+# Update 2018-10-02 by Butui Hu
+
+To run `example.py`, you need the latest [Theano](https://github.com/Theano/Theano), the latest [Lasagne](https://github.com/Lasagne/Lasagne), old version [SciPy](https://www.scipy.org/)(version 0.17 works ok) with Python2.
+
+`to_pytorch_model.py` helps convert Lasagne model to PyTorch model, PyTorch model is defined in `SonoNet.py`, you need PyTorch >= 0.4.1 with Python3. Converted PyTorch models is provided in `pytorch.model.tar.gz` for convenient.
+
+`crop_image.py` helps crop example image according to `example.py`, and this requires [imageio](http://imageio.github.io/) module.
+
+**Note**: `example_images/test/other/other.jpg` is not provided by paper author, and is not cropped yet. Please also note that though I try my best to convert Lasagne model to PyTorch model, I could not make sure that the model works as expected in Lasagne. And after I write a simple script to run the example, I didn't get the same performance. 
+
+Saddly, I have to give up. The model is trained with grayscale image, and data is normalize to [0, 255] not [0, 1]. I don't think that I could use these pretrained model.
+
