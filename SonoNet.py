@@ -196,7 +196,7 @@ def SmallNet(in_channels=1, num_classes=14):
 
         nn.Conv2d(64, 128, kernel_size=3, padding=1, bias=True),
         nn.ReLU(inplace=True),
-        nn.Conv2d(128, 128, kernel_size=5, padding=1, bias=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=True),
         nn.ReLU(inplace=True),
 
         nn.Conv2d(128, 64, kernel_size=1),
