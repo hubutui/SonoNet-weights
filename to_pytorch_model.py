@@ -111,22 +111,26 @@ lasagne.layers.set_all_param_values(lasagne_model['last_activation'], param_valu
 layers = lasagne.layers.get_all_layers(lasagne_model['last_activation'])
 pytorch_model = SonoNet.SmallNet()
 
+# SmallNet needs more cares...
+# get conv layer index in layers list
+layer_list = []
 idx = 0
-for layer in layers[1:]:
+for layer in layers:
     if isinstance(layer, Conv2DLayer):
-        pytorch_model[idx].weight = nn.Parameter(torch.from_numpy(layer.W.get_value()))
-    elif isinstance(layer, BatchNormLayer):
-        pytorch_model[idx].bias = nn.Parameter(torch.from_numpy(layer.beta.get_value()))
-        pytorch_model[idx].weight = nn.Parameter(torch.from_numpy(layer.gamma.get_value()))
-        pytorch_model[idx].running_mean = nn.Parameter(torch.from_numpy(layer.mean.get_value()))
-        # Note that lasagne stores inv_std = 1 / \sqrt{\sigma^2 + \epsilon} with epsilon = 1e-4
-        # while pytorch stores var = \sigma^2 with epsilon = 1e-5
-        # and lasagne
-        epsilon = 1e-4
-        inv_std = torch.from_numpy(layer.inv_std.get_value())
-        var = torch.add(torch.pow(torch.reciprocal(inv_std), 2), -1e-4)
-        pytorch_model[idx].running_var = nn.Parameter(var)
+        layer_list.append(idx)
     idx += 1
+
+# get conv layer index in modules list
+module_list = []
+for idx in range(0, len(pytorch_model._modules)):
+    if isinstance(pytorch_model[idx], nn.Conv2d):
+        module_list.append(idx)
+    idx += 1
+
+# initialize conv layers' weight & bias
+for idx, idy in zip(layer_list, module_list):
+    pytorch_model[idy].weight = nn.Parameter(torch.from_numpy(layers[idx].W.get_value()))
+    pytorch_model[idy].bias = nn.Parameter(torch.from_numpy(layers[idx].b.get_value()))
 
 print('Saving SmallNet model to SmallNet.pytorch.pth...')
 torch.save(pytorch_model.state_dict(), 'SmallNet.pytorch.pth')
