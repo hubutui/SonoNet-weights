@@ -27,8 +27,15 @@ for layer in layers[1:]:
     elif isinstance(layer, BatchNormLayer):
         pytorch_model[idx].bias = nn.Parameter(torch.from_numpy(layer.beta.get_value()))
         pytorch_model[idx].weight = nn.Parameter(torch.from_numpy(layer.gamma.get_value()))
+        pytorch_model[idx].running_mean = nn.Parameter(torch.from_numpy(layer.mean.get_value()))
+        # Note that lasagne stores inv_std = 1 / \sqrt{\sigma^2 + \epsilon} with epsilon = 1e-4
+        # while pytorch stores var = \sigma^2 with epsilon = 1e-5
+        # and lasagne
+        epsilon = 1e-4
+        inv_std = torch.from_numpy(layer.inv_std.get_value())
+        var = torch.add(torch.pow(torch.reciprocal(inv_std), 2), -1e-4)
+        pytorch_model[idx].running_var = nn.Parameter(var)
     idx += 1
 
 print('Saving SonoNet64 model to SonoNet64.pytorch.pth...')
 torch.save(pytorch_model.state_dict(), 'SonoNet64.pytorch.pth')
-
