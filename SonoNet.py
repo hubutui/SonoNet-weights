@@ -7,6 +7,124 @@
 import torch.nn as nn
 
 
+def SonoNet16(in_channels=1, num_classes=14):
+    model = nn.Sequential(
+        nn.Conv2d(in_channels, 16, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(16, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(16, 16, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(16, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(16, 32, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(32, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(32, 32, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(32, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(32, 64, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(64, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(64, 64, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(64, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(64, 64, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(64, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(64, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+
+        nn.Conv2d(128, 64, kernel_size=1, bias=False),
+        nn.BatchNorm2d(64, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(64, num_classes, kernel_size=1, bias=False),
+        nn.BatchNorm2d(num_classes, eps=1e-4)
+    )
+
+    return model
+
+def SonoNet32(in_channels=1, num_classes=14):
+    model = nn.Sequential(
+        nn.Conv2d(in_channels, 32, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(32, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(32, 32, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(32, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(32, 64, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(64, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(64, 64, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(64, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(64, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(128, 256, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(256, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(256, 256, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(256, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(256, 256, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(256, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(256, 256, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(256, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(256, 256, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(256, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(256, 256, kernel_size=3, padding=1, bias=False),
+        nn.BatchNorm2d(256, eps=1e-4),
+        nn.ReLU(inplace=True),
+
+        nn.Conv2d(256, 128, kernel_size=1, bias=False),
+        nn.BatchNorm2d(128, eps=1e-4),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, num_classes, kernel_size=1, bias=False),
+        nn.BatchNorm2d(num_classes, eps=1e-4)
+    )
+
+    return model
+
 def SonoNet64(in_channels=1, num_classes=14):
     model = nn.Sequential(
         nn.Conv2d(in_channels, 64, kernel_size=3, padding=1, bias=False),
@@ -62,6 +180,28 @@ def SonoNet64(in_channels=1, num_classes=14):
         nn.ReLU(inplace=True),
         nn.Conv2d(256, num_classes, kernel_size=1, bias=False),
         nn.BatchNorm2d(num_classes, eps=1e-4)
+    )
+
+    return model
+
+def SmallNet(in_channels=1, num_classes=14):
+    model = nn.Sequential(
+        nn.Conv2d(in_channels, 32, kernel_size=7, stride=2, bias=True),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(32, 64, kernel_size=5, stride=2, bias=True),
+        nn.ReLU(inplace=True),
+        nn.MaxPool2d(kernel_size=2),
+
+        nn.Conv2d(64, 128, kernel_size=3, padding=1, bias=True),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(128, 128, kernel_size=5, padding=1, bias=True),
+        nn.ReLU(inplace=True),
+
+        nn.Conv2d(128, 64, kernel_size=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(64, num_classes, kernel_size=1)
     )
 
     return model
